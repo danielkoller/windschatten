@@ -15,17 +15,10 @@ export default function App() {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <label htmlFor="First name">First name</label>
+        <label htmlFor="Username">Username</label>
         <input
-          placeholder="First name"
-          {...register('First name', { required: true, maxLength: 80 })}
-        />
-      </div>
-      <div>
-        <label htmlFor="Last name">Last name</label>
-        <input
-          placeholder="Last name"
-          {...register('Last name', { required: true, maxLength: 100 })}
+          placeholder="Username"
+          {...register('Username', { required: true, maxLength: 80 })}
         />
       </div>
       <div>
@@ -33,14 +26,6 @@ export default function App() {
         <input
           placeholder="Password"
           {...register('Password', { required: true, pattern: /^\S+@\S+$/i })}
-        />
-      </div>
-      <div>
-        <label htmlFor="Email">Email</label>
-        <input
-          type="email"
-          placeholder="Email"
-          {...register('Email', { required: true })}
         />
       </div>
       <div>

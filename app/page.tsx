@@ -2,6 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from './page.module.scss';
 
+export const metadata = {
+  title: 'Windschatten',
+  description: 'You will never ride alone',
+};
+
 export default function Home() {
   return (
     <main>

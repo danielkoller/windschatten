@@ -1,9 +1,15 @@
-import BikeRoute from './Route';
+import Map from './Route';
 
-export default function RoutePage() {
+export const metadata = {
+  title: 'Windschatten',
+  description: 'You will never ride alone',
+};
+
+export default function Page() {
   return (
-    <main>
-      <BikeRoute />
-    </main>
+    <div>
+      <h1>Page</h1>
+      <Map />
+    </div>
   );
 }
