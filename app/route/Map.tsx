@@ -7,6 +7,7 @@ import {
   useJsApiLoader,
 } from '@react-google-maps/api';
 import { useRef, useState } from 'react';
+import styles from './page.module.scss';
 
 // Define types for the response of the Directions API
 interface DirectionsResponse {
@@ -28,6 +29,8 @@ export default function Map() {
   const [durationByCar, setDurationByCar] = useState<string>('');
   const [directionsResponse, setDirectionsResponse] =
     useState<DirectionsResponse | null>(null);
+  const [emissions, setEmissions] = useState<string>('');
+  const [gasCost, setGasCost] = useState<string>('');
   const [distance, setDistance] = useState<string>('');
   const [duration, setDuration] = useState<string>('');
   const originRef = useRef<HTMLInputElement>(null);
@@ -49,18 +52,6 @@ export default function Map() {
     ) {
       return;
     }
-
-    // Implement this, when the database is ready - so far we only have the possibility to enter the origin and destination manually
-
-    //   async function calculateRoute() {
-    // const response = await fetch('/api/user-location'); // replace with your own API endpoint to fetch the user's location
-    // const data = await response.json();
-
-    // const { origin, destination } = data; // assuming your API endpoint returns an object with 'origin' and 'destination' properties
-
-    // if (!origin || !destination) {
-    //   return;
-    // }
 
     // Create a new DirectionsService object
     const directionsService = new google.maps.DirectionsService();
@@ -85,16 +76,34 @@ export default function Map() {
     });
 
     // Set the state variable for the duration by car
+    const durationByCar = drivingResults.routes[0].legs[0].duration.value / 60;
     setDurationByCar(drivingResults.routes[0].legs[0].duration.text);
+
+    // Calculate the average CO2 emissions for a car ride based on the duration of the trip in minutes
+    const averageEmissionsPerMinute = 0.195;
+    const emissions = (durationByCar * averageEmissionsPerMinute).toFixed(2);
+    setEmissions(emissions);
+
+    // Calculate the gas cost for the car ride based on the duration of the trip in minutes
+    const averageFuelConsumption = 7.4; // liters per 100 km
+    const fuelPrice = 1.5; // Euro per liter
+    const distanceInKm = drivingResults.routes[0].legs[0].distance.value / 1000;
+    const fuelConsumption = (distanceInKm / 100) * averageFuelConsumption;
+    const gasCost = (
+      fuelConsumption *
+      fuelPrice *
+      (durationByCar / 60)
+    ).toFixed(2);
+    setGasCost(gasCost);
   }
 
   return (
     <div>
-      <div>
+      <div className={styles.googleMap}>
         <GoogleMap
           center={center}
           zoom={12}
-          mapContainerStyle={{ width: '80%', height: '400px' }}
+          mapContainerStyle={{ width: '80%', height: '500px' }}
           options={{
             zoomControl: false,
             streetViewControl: false,
@@ -130,9 +139,13 @@ export default function Map() {
           <div>
             <span>Distance: {distance}</span>
             <br />
-            <span>Duration by Bike: {duration}</span>
+            <span>🚲 Duration by Bike: {duration}</span>
             <br />
-            <span>Duration by Car: {durationByCar}</span>
+            <span>🚗 Duration by Car: {durationByCar}</span>
+            <br />
+            <span>🏭 CO2 Emissions: {emissions} kg</span>
+            <br />
+            <span>💶 Gas Cost: {gasCost} Euro</span>
           </div>
         </div>
       </div>
