@@ -76,25 +76,28 @@ export default function Map() {
     });
 
     // Set the state variable for the duration by car
-    const durationByCar = drivingResults.routes[0].legs[0].duration.value / 60;
+    const durationByCarValue =
+      drivingResults.routes[0].legs[0].duration.value / 60;
     setDurationByCar(drivingResults.routes[0].legs[0].duration.text);
 
     // Calculate the average CO2 emissions for a car ride based on the duration of the trip in minutes
     const averageEmissionsPerMinute = 0.195;
-    const emissions = (durationByCar * averageEmissionsPerMinute).toFixed(2);
-    setEmissions(emissions);
+    const emissionsValue = (
+      durationByCarValue * averageEmissionsPerMinute
+    ).toFixed(2);
+    setEmissions(emissionsValue);
 
     // Calculate the gas cost for the car ride based on the duration of the trip in minutes
     const averageFuelConsumption = 7.4; // liters per 100 km
-    const fuelPrice = 1.5; // Euro per liter
+    const fuelPrice = 1.5; // Euro per liter in Austria
     const distanceInKm = drivingResults.routes[0].legs[0].distance.value / 1000;
     const fuelConsumption = (distanceInKm / 100) * averageFuelConsumption;
-    const gasCost = (
+    const gasCostValue = (
       fuelConsumption *
       fuelPrice *
-      (durationByCar / 60)
+      (durationByCarValue / 60)
     ).toFixed(2);
-    setGasCost(gasCost);
+    setGasCost(gasCostValue);
   }
 
   return (
