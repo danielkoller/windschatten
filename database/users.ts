@@ -4,10 +4,24 @@ import { sql } from './connect';
 type User = {
   id: number;
   username: string;
-  password: string;
-  homeDistrict: string;
-  workDistrict: string;
+  passwordHash: string;
 };
+
+export const getUserByUsernameWithPasswordHash = cache(
+  async (username: string) => {
+    const [user] = await sql<User[]>`
+    SELECT
+      id,
+      username,
+      password_hash AS "passwordHash"
+    FROM
+      users
+    WHERE
+      username = ${username}
+  `;
+    return user;
+  },
+);
 
 export const getUserByUsername = cache(async (username: string) => {
   const [user] = await sql<{ id: number; username: string }[]>`
