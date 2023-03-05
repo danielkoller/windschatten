@@ -1,71 +1,79 @@
 'use client';
-import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { districts } from '../../../database/districts.ts';
-import styles from './page.module.scss';
 
 export default function RegisterForm() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
-    console.log(data);
-  };
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<{ message: string }[]>([]);
+  const [homeDistrict, setHomeDistrict] = useState('');
+  const [workDistrict, setWorkDistrict] = useState('');
+  const router = useRouter();
   return (
-    <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="Username">Username</label>
+    <form
+      onSubmit={async (event) => {
+        event.preventDefault();
+        const response = await fetch('/api/register', {
+          method: 'POST',
+          body: JSON.stringify({
+            username,
+            password,
+            homeDistrict,
+            workDistrict,
+          }),
+        });
+        const data: RegisterResponseBody = await response.json();
+        if ('errors' in data) {
+          setErrors(data.errors);
+          return;
+        }
+        router.push('/');
+      }}
+    >
+      <label>
+        Username:
         <input
-          id="Username"
-          placeholder="Username"
-          {...register('Username', { required: true, maxLength: 80 })}
+          value={username}
+          onChange={(event) => setUsername(event.currentTarget.value)}
         />
-        {errors.Username && <span>This field is required</span>}
-      </div>
-      <div>
-        <label htmlFor="Password">Password</label>
+      </label>
+      <label>
+        Password:
         <input
-          id="Password"
-          type="password"
-          placeholder="Password"
-          {...register('Password', { required: true })}
+          value={password}
+          onChange={(event) => setPassword(event.currentTarget.value)}
         />
-        {errors.Password && <span>This field is required</span>}
-      </div>
-      <div>
-        <label htmlFor="HomeDistrict">Home District</label>
+      </label>
+      <label>
+        Where do you live?
         <select
-          id="HomeDistrict"
-          {...register('HomeDistrict', { required: true })}
+          value={homeDistrict}
+          onChange={(event) => setHomeDistrict(event.currentTarget.value)}
         >
+          <option value="">Select a district</option>
           {districts.map((district) => (
             <option key={`districts-${district.id}`} value={district.value}>
               {district.label}
             </option>
           ))}
         </select>
-        {errors.HomeDistrict && <span>This field is required</span>}
-      </div>
-      <div>
-        <label htmlFor="WorkDistrict">Work District</label>
+      </label>
+      <label>
+        Where do you work?
         <select
-          id="WorkDistrict"
-          {...register('WorkDistrict', { required: true })}
+          value={workDistrict}
+          onChange={(event) => setWorkDistrict(event.currentTarget.value)}
         >
+          <option value="">Select a district</option>{' '}
           {districts.map((district) => (
             <option key={`districts-${district.id}`} value={district.value}>
               {district.label}
             </option>
           ))}
         </select>
-        {errors.WorkDistrict && <span>This field is required</span>}
-      </div>
-      <div>
-        <input type="submit" />
-      </div>
+      </label>
+      <button>Register</button>
     </form>
   );
 }
