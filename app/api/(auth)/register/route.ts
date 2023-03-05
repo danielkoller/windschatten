@@ -54,7 +54,11 @@ export const POST = async (request: NextRequest) => {
 
   if (user) {
     return NextResponse.json(
-      { errors: [{ message: 'username is already taken' }] },
+      {
+        errors: [
+          { message: 'Username is already taken - please choose another one!' },
+        ],
+      },
       { status: 400 },
     );
   }
@@ -72,7 +76,9 @@ export const POST = async (request: NextRequest) => {
 
   if (!newUser) {
     return NextResponse.json(
-      { errors: [{ message: 'user creation failed' }] },
+      {
+        errors: [{ message: 'Internal Server Error - User Creation failed!' }],
+      },
       { status: 500 },
     );
   }
