@@ -6,8 +6,8 @@ import { createUser, getUserByUsername } from '../../../../database/users';
 const userSchema = z.object({
   username: z.string(),
   password: z.string(),
-  work_district: z.string(),
-  home_district: z.string(),
+  workDistrict: z.string(),
+  homeDistrict: z.string(),
 });
 
 export type RegisterResponseBody =
@@ -35,7 +35,14 @@ export const POST = async (request: NextRequest) => {
   // check if the string is empty
   if (!result.data.username || !result.data.password) {
     return NextResponse.json(
-      { errors: [{ message: 'Username or Password is empty' }] },
+      {
+        errors: [
+          {
+            message:
+              'Username or Password is empty - please fill out the forms!',
+          },
+        ],
+      },
       { status: 400 },
     );
   }
@@ -47,11 +54,7 @@ export const POST = async (request: NextRequest) => {
 
   if (user) {
     return NextResponse.json(
-      {
-        errors: [
-          { message: 'Username is already taken - please choose another one!' },
-        ],
-      },
+      { errors: [{ message: 'username is already taken' }] },
       { status: 400 },
     );
   }
@@ -63,13 +66,13 @@ export const POST = async (request: NextRequest) => {
   const newUser = await createUser(
     result.data.username,
     passwordHash,
-    result.data.home_district,
-    result.data.work_district,
+    result.data.workDistrict,
+    result.data.homeDistrict,
   );
 
   if (!newUser) {
     return NextResponse.json(
-      { errors: [{ message: 'User Creation failed' }] },
+      { errors: [{ message: 'user creation failed' }] },
       { status: 500 },
     );
   }
