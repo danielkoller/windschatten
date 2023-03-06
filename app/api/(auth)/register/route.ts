@@ -70,8 +70,8 @@ export const POST = async (request: NextRequest) => {
   const newUser = await createUser(
     result.data.username,
     passwordHash,
-    result.data.workDistrict,
     result.data.homeDistrict,
+    result.data.workDistrict,
   );
 
   if (!newUser) {

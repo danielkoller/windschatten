@@ -4,7 +4,15 @@ import { sql } from './connect';
 type User = {
   id: number;
   username: string;
+};
+
+type UserWithPasswordHash = User & {
   passwordHash: string;
+};
+
+type UserWithDistricts = User & {
+  homeDistrict: string;
+  workDistrict: string;
 };
 
 // We use this to get all users with the same home and work districts
@@ -13,8 +21,7 @@ export const getAllUsersWithTheSameDistricts = cache(
     const users = await sql<User[]>`
       SELECT
         id,
-        username,
-        password_hash AS "passwordHash"
+        username
       FROM
         users
       WHERE
@@ -27,7 +34,7 @@ export const getAllUsersWithTheSameDistricts = cache(
 
 export const getUserByUsernameWithPasswordHash = cache(
   async (username: string) => {
-    const [user] = await sql<User[]>`
+    const [user] = await sql<UserWithPasswordHash[]>`
     SELECT
       id,
       username,
@@ -43,19 +50,12 @@ export const getUserByUsernameWithPasswordHash = cache(
 
 // We use this so we can get the full user object when we need it
 export const getFullUserByUsername = cache(async (username: string) => {
-  const [user] = await sql<
-    {
-      id: number;
-      username: string;
-      workDistrict: string;
-      homeDistrict: string;
-    }[]
-  >`
+  const [user] = await sql<UserWithDistricts[]>`
     SELECT
       id,
       username,
-      work_district AS "workDistrict",
-      home_district AS "homeDistrict"
+      home_district AS "homeDistrict",
+      work_district AS "workDistrict"
     FROM
       users
     WHERE
