@@ -6,7 +6,7 @@ import { districts } from '../../../database/districts.ts';
 import { RegisterResponseBody } from '../../api/(auth)/register/route';
 import styles from './page.module.scss';
 
-export default function RegisterForm() {
+export default function RegisterForm(props: { returnTo?: string | string[] }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [homeDistrict, setHomeDistrict] = useState('');
@@ -33,9 +33,20 @@ export default function RegisterForm() {
       });
       return;
     }
+
+    if (
+      props.returnTo &&
+      !Array.isArray(props.returnTo) &&
+      // This is checking that the return to is a valid path in your application and not going to a different domain
+      /^\/[a-zA-Z0-9-?=/]*$/.test(props.returnTo)
+    ) {
+      router.push(props.returnTo);
+      return;
+    }
+
     // Show success message using react-hot-toast
     toast.success('Registration successful');
-    router.push('/route');
+    router.push(`/profile/${data.user.username}`);
   };
 
   return (

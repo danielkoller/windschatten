@@ -5,6 +5,8 @@ export const metadata = {
   description: 'You will never ride alone',
 };
 
-export default function LoginPage() {
-  return <LoginForm />;
+type Props = { searchParams: { returnTo?: string | string[] } };
+
+export default function LoginPage(props: Props) {
+  return <LoginForm returnTo={props.searchParams.returnTo} />;
 }

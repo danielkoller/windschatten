@@ -5,7 +5,7 @@ import { toast, Toaster } from 'react-hot-toast';
 import { RegisterResponseBody } from '../../api/(auth)/register/route';
 import styles from './page.module.scss';
 
-export default function LoginForm() {
+export default function LoginForm(props: { returnTo?: string | string[] }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
@@ -28,9 +28,20 @@ export default function LoginForm() {
       });
       return;
     }
+
+    if (
+      props.returnTo &&
+      !Array.isArray(props.returnTo) &&
+      // This is checking that the return to is a valid path in your application and not going to a different domain
+      /^\/[a-zA-Z0-9-?=/]*$/.test(props.returnTo)
+    ) {
+      router.push(props.returnTo);
+      return;
+    }
+
     // Show success message using react-hot-toast
     toast.success('Login successful');
-    router.push('/route');
+    router.push(`/profile/${data.user.username}`);
   };
 
   return (
