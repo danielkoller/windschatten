@@ -46,7 +46,8 @@ export default function RegisterForm(props: { returnTo?: string | string[] }) {
 
     // Show success message using react-hot-toast
     toast.success('Registration successful');
-    router.push(`/profile/${data.user.username}`);
+    router.replace(`/profile/${data.user.username}`);
+    router.refresh();
   };
 
   return (
@@ -103,7 +104,7 @@ export default function RegisterForm(props: { returnTo?: string | string[] }) {
             </select>
           </label>
         </div>
-        <button className={styles.registerButton}>Register</button>
+        <button className="btn btm-primary">Register</button>
       </form>
     </div>
   );

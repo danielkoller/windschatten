@@ -1,3 +1,6 @@
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { getValidSessionByToken } from '../../../database/sessions';
 import LoginForm from './LoginForm';
 
 export const metadata = {
@@ -7,6 +10,17 @@ export const metadata = {
 
 type Props = { searchParams: { returnTo?: string | string[] } };
 
-export default function LoginPage(props: Props) {
+export default async function LoginPage(props: Props) {
+  // check if i have a valid session
+  const sessionTokenCookie = cookies().get('sessionToken');
+
+  const session =
+    sessionTokenCookie &&
+    (await getValidSessionByToken(sessionTokenCookie.value));
+
+  // if yes redirect to home
+  if (session) {
+    redirect('/');
+  }
   return <LoginForm returnTo={props.searchParams.returnTo} />;
 }

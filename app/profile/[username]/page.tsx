@@ -25,7 +25,7 @@ export default async function ProfilePage({ params }: Props) {
 
   return (
     <div>
-      <h1>
+      <h1 className="text-3xl">
         {user.homeDistrict} - {user.workDistrict}
       </h1>
       <Map />

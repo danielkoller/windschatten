@@ -124,17 +124,27 @@ export default function Map() {
       <div>
         <div>
           <Autocomplete>
-            <input placeholder="Origin" ref={originRef} />
+            <input
+              placeholder="Origin"
+              className="input input-bordered w-full max-w-xs"
+              ref={originRef}
+            />
           </Autocomplete>
         </div>
         <div>
           <Autocomplete>
-            <input placeholder="Destination" ref={destinationRef} />
+            <input
+              placeholder="Destination"
+              className="input input-bordered w-full max-w-xs"
+              ref={destinationRef}
+            />
           </Autocomplete>
         </div>
 
         <div>
-          <button onClick={calculateRoute}>Calculate Route</button>
+          <button className="btn" onClick={calculateRoute}>
+            Calculate Route
+          </button>
         </div>
       </div>
       <div>

@@ -1,4 +1,5 @@
 import './globals.scss';
+import Footer from './Footer';
 import Header from './Header';
 
 export const metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout(props: Props) {
       <body>
         <Header />
         {props.children}
+        <Footer />
       </body>
     </html>
   );

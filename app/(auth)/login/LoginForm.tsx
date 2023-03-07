@@ -41,17 +41,21 @@ export default function LoginForm(props: { returnTo?: string | string[] }) {
 
     // Show success message using react-hot-toast
     toast.success('Login successful');
-    router.push(`/profile/${data.user.username}`);
+    router.replace(`/profile/${data.user.username}`);
+    router.refresh();
   };
 
   return (
     <div>
       <Toaster />
+
       <form className={styles.form} onSubmit={handleSubmit}>
         <div>
           <label>
             Username:
             <input
+              className="input input-bordered w-full max-w-xs"
+              placeholder="Enter your username here"
               value={username}
               onChange={(event) => setUsername(event.currentTarget.value)}
             />
@@ -61,12 +65,14 @@ export default function LoginForm(props: { returnTo?: string | string[] }) {
           <label>
             Password:
             <input
+              className="input input-bordered w-full max-w-xs"
+              placeholder="Enter your password here"
               value={password}
               onChange={(event) => setPassword(event.currentTarget.value)}
             />
           </label>
         </div>
-        <button className={styles.registerButton}>Login</button>
+        <button className="btn btm-primary">Login</button>
       </form>
     </div>
   );

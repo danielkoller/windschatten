@@ -15,6 +15,7 @@ type UserWithDistricts = User & {
   workDistrict: string;
 };
 
+// We use this to get the user when we have the session token
 export const getUserBySessionToken = cache(async (token: string) => {
   const [user] = await sql<{ id: number; username: string }[]>`
   SELECT

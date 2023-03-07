@@ -23,7 +23,7 @@ export default function Home() {
           encouraging eco-friendly transportation and community building.
         </p>
         <Link href="/registration">
-          <button className={styles.getStarted}>Get Started</button>
+          <button className="btn">Get Started</button>
         </Link>
       </div>
     </main>
