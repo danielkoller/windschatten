@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createSession } from '../../../../database/sessions';
 import { getUserByUsernameWithPasswordHash } from '../../../../database/users';
+import { createSerializedRegisterSessionTokenCookie } from '../../../../utils/cookies';
 
 const userSchema = z.object({
   username: z.string(),
@@ -91,19 +92,36 @@ export const POST = async (request: NextRequest) => {
     );
   }
 
-  // NEEDS TO GET FINISHED
-  // Create a session
   // Create the token
   const token = crypto.randomBytes(80).toString('base64');
-  // Create the session
+  // Create a session
   const session = await createSession(token, userWithPasswordHash.id);
-  console.log(session);
-  // Attach the new cookie serialized to the header of the response
-  // Serialize the cookie
+
+  if (!session) {
+    return NextResponse.json(
+      {
+        errors: [
+          { message: 'Session could not be created - please try again!' },
+        ],
+      },
+      { status: 500 },
+    );
+  }
+
+  const serializedCookie = createSerializedRegisterSessionTokenCookie(
+    session.token,
+  );
+
   // Add the new header
 
   return NextResponse.json(
-    { user: { username: userWithPasswordHash.username } },
-    { status: 200 },
+    {
+      user: { username: userWithPasswordHash.username },
+    },
+    {
+      status: 200,
+      // - Attach the new cookie serialized to the header fo the response
+      headers: { 'Set-Cookie': serializedCookie },
+    },
   );
 };
