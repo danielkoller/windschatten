@@ -108,7 +108,6 @@ export const POST = async (request: NextRequest) => {
   );
 
   // 6. return the new username
-  // 6. return the new username
   return NextResponse.json(
     { user: { username: newUser.username } },
     {

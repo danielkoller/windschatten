@@ -2,6 +2,7 @@ import {
   getAllUsersWithTheSameDistricts,
   getFullUserByUsername,
 } from '../../../database/users.ts';
+import Map from '../../route/Map.tsx';
 
 type Props = { params: { username: string } };
 
@@ -27,6 +28,7 @@ export default async function ProfilePage({ params }: Props) {
       <h1>
         {user.homeDistrict} - {user.workDistrict}
       </h1>
+      <Map />
       <h2>Hi, {user.username}, find your fastest route here!</h2>
 
       <h3>Other users with the same route:</h3>
