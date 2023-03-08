@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { createSession } from '../../../../database/sessions';
 import { getUserByUsernameWithPasswordHash } from '../../../../database/users';
 import { createSerializedRegisterSessionTokenCookie } from '../../../../utils/cookies';
+import { createCsrfSecret } from '../../../../utils/csrf';
 
 const userSchema = z.object({
   username: z.string(),
@@ -94,8 +95,15 @@ export const POST = async (request: NextRequest) => {
 
   // Create the token
   const token = crypto.randomBytes(80).toString('base64');
+
+  const csrfSecret = createCsrfSecret();
+
   // Create a session
-  const session = await createSession(token, userWithPasswordHash.id);
+  const session = await createSession(
+    token,
+    userWithPasswordHash.id,
+    csrfSecret,
+  );
 
   if (!session) {
     return NextResponse.json(
