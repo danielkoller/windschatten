@@ -1,4 +1,10 @@
-import { faHome, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHome,
+  faPlus,
+  faSignIn,
+  faSignOut,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
@@ -48,9 +54,11 @@ export default async function Header() {
             className="btn btn-ghost normal-case text-xl mr-4"
             href="/registration"
           >
+            <FontAwesomeIcon icon={faPlus} className="mr-2" />
             Registration
           </Link>
           <Link className="btn btn-ghost normal-case text-xl" href="/login">
+            <FontAwesomeIcon icon={faSignOut} className="mr-2" />
             Login
           </Link>
         </div>
