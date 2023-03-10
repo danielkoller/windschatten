@@ -1,5 +1,14 @@
 'use client';
 import {
+  faBicycle,
+  faCar,
+  faDollarSign,
+  faFire,
+  faMap,
+  faRoad,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
   Autocomplete,
   DirectionsRenderer,
   GoogleMap,
@@ -7,7 +16,6 @@ import {
   useJsApiLoader,
 } from '@react-google-maps/api';
 import { useRef, useState } from 'react';
-import styles from './page.module.scss';
 
 // Define types for the response of the Directions API
 interface DirectionsResponse {
@@ -101,64 +109,98 @@ export default function Map() {
   }
 
   return (
-    <div>
-      <div className={styles.googleMap}>
-        <GoogleMap
-          center={center}
-          zoom={12}
-          mapContainerStyle={{ width: '80%', height: '500px' }}
-          options={{
-            zoomControl: false,
-            streetViewControl: false,
-            mapTypeControl: false,
-            fullscreenControl: false,
-          }}
-          onLoad={() => setMap(map)}
-        >
-          <Marker position={center} />
-          {directionsResponse && (
-            <DirectionsRenderer directions={directionsResponse} />
-          )}
-        </GoogleMap>
-      </div>
-      <div>
-        <div>
-          <Autocomplete>
-            <input
-              placeholder="Origin"
-              className="input input-bordered w-full max-w-xs"
-              ref={originRef}
-            />
-          </Autocomplete>
-        </div>
-        <div>
-          <Autocomplete>
-            <input
-              placeholder="Destination"
-              className="input input-bordered w-full max-w-xs"
-              ref={destinationRef}
-            />
-          </Autocomplete>
-        </div>
-
-        <div>
-          <button className="btn" onClick={calculateRoute}>
-            Calculate Route
-          </button>
+    <div className="flex items-center justify-center py-8">
+      <div className="w-4/5 h-96 mr-8">
+        <div className="rounded-lg overflow-hidden h-full">
+          <GoogleMap
+            center={center}
+            zoom={12}
+            mapContainerStyle={{ width: '100%', height: '100%' }}
+            options={{
+              zoomControl: false,
+              streetViewControl: false,
+              mapTypeControl: false,
+              fullscreenControl: false,
+            }}
+            onLoad={() => setMap(map)}
+          >
+            <Marker position={center} />
+            {directionsResponse && (
+              <DirectionsRenderer directions={directionsResponse} />
+            )}
+          </GoogleMap>
         </div>
       </div>
-      <div>
-        <div>
+      <div className="flex flex-col">
+        <div className="flex flex-col items-center">
+          <FontAwesomeIcon icon={faMap} />
+          <h2 className="text-lg font-bold my-4 items-center">
+            Find your fastest route here
+          </h2>
+        </div>
+        <div className="flex items-center mb-4">
+          <div className="mr-4">
+            <Autocomplete>
+              <input
+                placeholder="Origin"
+                className="input input-bordered w-full max-w-xs"
+                ref={originRef}
+              />
+            </Autocomplete>
+          </div>
+          <div className="mr-4">
+            <Autocomplete>
+              <input
+                placeholder="Destination"
+                className="input input-bordered w-full max-w-xs"
+                ref={destinationRef}
+              />
+            </Autocomplete>
+          </div>
           <div>
-            <span>Distance: {distance}</span>
-            <br />
-            <span>🚲 Duration by Bike: {duration}</span>
-            <br />
-            <span>🚗 Duration by Car: {durationByCar}</span>
-            <br />
-            <span>🏭 CO2 Emissions: {emissions} kg</span>
-            <br />
-            <span>💶 Gas Cost: {gasCost} Euro</span>
+            <button className="btn" onClick={calculateRoute}>
+              Calculate Route
+            </button>
+          </div>
+        </div>
+        <div className="bg-gray-600 rounded-lg p-4">
+          <div>
+            <span className="font-bold">
+              <FontAwesomeIcon icon={faRoad} className="mr-3" />
+              Distance:
+            </span>{' '}
+            {distance}
+          </div>
+          <div className="border-t border-white pt-1 mt-1">
+            <span className="font-bold">
+              <FontAwesomeIcon icon={faBicycle} className="mr-1" /> Duration by
+              Bike:
+            </span>{' '}
+            {duration}
+          </div>
+          <div className="border-t border-white  pt-1 mt-1">
+            <div>
+              <span className="font-bold">
+                <FontAwesomeIcon icon={faCar} className="mr-2" /> Duration by
+                Car:
+              </span>{' '}
+              {durationByCar}
+            </div>
+            <div>
+              <span className="font-bold">
+                {' '}
+                <FontAwesomeIcon icon={faFire} className="mr-3" /> CO2
+                Emissions:
+              </span>{' '}
+              {emissions} kg
+            </div>
+            <div>
+              <span className="font-bold">
+                <FontAwesomeIcon icon={faDollarSign} className="mr-4" /> Gas
+                Cost:
+              </span>{' '}
+              {gasCost} Euro
+            </div>
           </div>
         </div>
       </div>

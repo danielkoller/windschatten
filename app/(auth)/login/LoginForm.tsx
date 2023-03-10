@@ -3,7 +3,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { RegisterResponseBody } from '../../api/(auth)/register/route';
-import styles from './page.module.scss';
 
 export default function LoginForm(props: { returnTo?: string | string[] }) {
   const [username, setUsername] = useState('');
@@ -46,34 +45,46 @@ export default function LoginForm(props: { returnTo?: string | string[] }) {
   };
 
   return (
-    <div>
-      <Toaster />
-
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Username:
-            <input
-              className="input input-bordered w-full max-w-xs"
-              placeholder="Enter your username here"
-              value={username}
-              onChange={(event) => setUsername(event.currentTarget.value)}
-            />
-          </label>
+    <div className="hero min-h-min">
+      <div className="hero-content flex-col lg:flex-row-reverse">
+        <div className="relative w-full max-w-sm">
+          <h1 className="text-5xl font-bold mb-8 top-0 left-0 z-10 w-full">
+            Login now
+          </h1>
+          <div className="mb-8 card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <div className="form-control">
+                  <label htmlFor="username" className="label">
+                    <span className="label-text">Username:</span>
+                  </label>
+                  <input
+                    className="input input-bordered"
+                    id="username"
+                    value={username}
+                    onChange={(event) => setUsername(event.currentTarget.value)}
+                  />
+                </div>
+                <div className="form-control">
+                  <label htmlFor="password" className="label">
+                    <span className="label-text">Password:</span>
+                  </label>
+                  <input
+                    className="input input-bordered"
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(event) => setPassword(event.currentTarget.value)}
+                  />
+                </div>
+                <div className="form-control mt-6">
+                  <button className="btn">Login</button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <div>
-          <label>
-            Password:
-            <input
-              className="input input-bordered w-full max-w-xs"
-              placeholder="Enter your password here"
-              value={password}
-              onChange={(event) => setPassword(event.currentTarget.value)}
-            />
-          </label>
-        </div>
-        <button className="btn btm-primary">Login</button>
-      </form>
+      </div>
     </div>
   );
 }

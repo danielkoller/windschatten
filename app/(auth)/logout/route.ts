@@ -1,7 +1,7 @@
 import cookie from 'cookie';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { deleteSessionByToken } from '../../database/sessions';
+import { deleteSessionByToken } from '../../../database/sessions';
 
 export async function GET(): Promise<NextResponse<null>> {
   const cookieStore = cookies();

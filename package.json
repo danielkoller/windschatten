@@ -11,6 +11,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.3.0",
+    "@fortawesome/free-solid-svg-icons": "^6.3.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@react-google-maps/api": "^2.18.1",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "18.14.2",
@@ -25,6 +28,7 @@
     "dotenv-cli": "^7.0.0",
     "dotenv-safe": "^8.2.0",
     "eslint-config-next": "^13.2.3",
+    "font-awesome": "^4.7.0",
     "fs": "^0.0.1-security",
     "ley": "^0.8.1",
     "next": "^13.2.3",

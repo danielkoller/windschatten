@@ -1,3 +1,5 @@
+import { faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { getUserBySessionToken } from '../database/users';
@@ -16,27 +18,31 @@ export default async function Header() {
     : await getUserBySessionToken(sessionToken.value);
 
   return (
-    <div className="navbar bg-base-100">
+    <div className="flex justify-between items-center bg-base-100 p-4">
       {user ? (
         <>
           <Link
-            className="btn btn-ghost normal-case text-xl"
+            className="btn btn-ghost normal-case text-xl mr-auto"
             href={`/profile/${user.username}`}
           >
+            <FontAwesomeIcon icon={faUser} className="mr-2" />
             {user.username}
           </Link>
-          <Link
-            className="btn btn-ghost normal-case text-xl"
-            href="/logout"
-            prefetch={false}
-          >
-            Logout
-          </Link>
+          <div>
+            <Link
+              className="btn btn-ghost normal-case text-xl ml-4"
+              href="/logout"
+              prefetch={false}
+            >
+              <FontAwesomeIcon icon={faSignOut} className="mr-2" />
+              Logout
+            </Link>
+          </div>
         </>
       ) : (
-        <>
+        <div className="flex justify-end flex-1">
           <Link
-            className="btn btn-ghost normal-case text-xl"
+            className="btn btn-ghost normal-case text-xl mr-4"
             href="/registration"
           >
             Registration
@@ -44,7 +50,7 @@ export default async function Header() {
           <Link className="btn btn-ghost normal-case text-xl" href="/login">
             Login
           </Link>
-        </>
+        </div>
       )}
     </div>
   );

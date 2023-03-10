@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { getValidSessionByToken } from '../../../database/sessions';
-import styles from './page.module.scss';
 import RegisterForm from './RegisterForm';
 
 export const metadata = {
@@ -23,9 +22,7 @@ export default async function RegisterPage(props: Props) {
     redirect('/');
   }
   return (
-    <main className={styles.container}>
-      <h1>We need some personal infos, before we can start</h1>
-      <p>Start riding right away </p>
+    <main>
       <RegisterForm returnTo={props.searchParams.returnTo} />
     </main>
   );
