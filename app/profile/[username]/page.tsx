@@ -1,5 +1,6 @@
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
 import {
   getAllUsersWithTheSameDistricts,
   getFullUserByUsername,
@@ -34,6 +35,7 @@ export default async function ProfilePage({ params }: Props) {
         <Map />
       </div>
       <div className="flex flex-col items-center justify-center px-4 py-8">
+        <FontAwesomeIcon icon={faUserGroup} className="text-4xl mb-2" />
         <h3 className="text-4xl font-extrabold dark:text-white">
           Other users with the same route:
         </h3>
@@ -56,7 +58,9 @@ export default async function ProfilePage({ params }: Props) {
             </tbody>
           </table>
         </div>
-        <button className="btn mt-4">Join this group</button>
+        <Link href="/group">
+          <button className="btn mt-4">Join this group</button>
+        </Link>
       </div>
     </div>
   );

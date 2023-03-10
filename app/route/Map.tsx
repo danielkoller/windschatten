@@ -133,7 +133,7 @@ export default function Map() {
       </div>
       <div className="flex flex-col">
         <div className="flex flex-col items-center">
-          <FontAwesomeIcon icon={faMap} />
+          <FontAwesomeIcon icon={faMap} className="text-4xl" />
           <h2 className="text-lg font-bold my-4 items-center">
             Find your fastest route here
           </h2>

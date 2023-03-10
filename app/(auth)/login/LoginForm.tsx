@@ -46,6 +46,7 @@ export default function LoginForm(props: { returnTo?: string | string[] }) {
 
   return (
     <div className="hero min-h-min">
+      <Toaster />
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="relative w-full max-w-sm">
           <h1 className="text-5xl font-bold mb-8 top-0 left-0 z-10 w-full">

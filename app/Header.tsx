@@ -1,4 +1,4 @@
-import { faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
@@ -19,26 +19,29 @@ export default async function Header() {
 
   return (
     <div className="flex justify-between items-center bg-base-100 p-4">
+      <div className="flex items-center">
+        <Link className="btn btn-ghost normal-case text-xl" href="/">
+          <FontAwesomeIcon icon={faHome} className="mr-2" /> Home
+        </Link>
+      </div>
       {user ? (
-        <>
+        <div className="flex items-center">
           <Link
-            className="btn btn-ghost normal-case text-xl mr-auto"
+            className="btn btn-ghost normal-case text-xl mr-4"
             href={`/profile/${user.username}`}
           >
             <FontAwesomeIcon icon={faUser} className="mr-2" />
             {user.username}
           </Link>
-          <div>
-            <Link
-              className="btn btn-ghost normal-case text-xl ml-4"
-              href="/logout"
-              prefetch={false}
-            >
-              <FontAwesomeIcon icon={faSignOut} className="mr-2" />
-              Logout
-            </Link>
-          </div>
-        </>
+          <Link
+            className="btn btn-ghost normal-case text-xl"
+            href="/logout"
+            prefetch={false}
+          >
+            <FontAwesomeIcon icon={faSignOut} className="mr-2" />
+            Logout
+          </Link>
+        </div>
       ) : (
         <div className="flex justify-end flex-1">
           <Link
