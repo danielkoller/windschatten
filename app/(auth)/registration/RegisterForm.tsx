@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
-import { districts } from '../../../database/districts.ts';
+import { districts } from '../../../database/districts';
 import { RegisterResponseBody } from '../../api/(auth)/register/route';
 
 export default function RegisterForm(props: { returnTo?: string | string[] }) {
@@ -12,7 +12,7 @@ export default function RegisterForm(props: { returnTo?: string | string[] }) {
   const [workDistrict, setWorkDistrict] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     const response = await fetch('/api/register', {
       method: 'POST',

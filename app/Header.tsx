@@ -58,7 +58,7 @@ export default async function Header() {
             Registration
           </Link>
           <Link className="btn btn-ghost normal-case text-xl" href="/login">
-            <FontAwesomeIcon icon={faSignOut} className="mr-2" />
+            <FontAwesomeIcon icon={faSignIn} className="mr-2" />
             Login
           </Link>
         </div>

@@ -1,5 +1,4 @@
 import Map from './Map';
-import styles from './page.module.scss';
 
 export const metadata = {
   title: 'Windschatten',
@@ -8,7 +7,7 @@ export const metadata = {
 
 export default function RoutePage() {
   return (
-    <div className={styles.wrapper}>
+    <div>
       <h1>Get your fastest route here</h1>
       <Map />
       <h2>Find other cyclists with a similar route</h2>
