@@ -30,8 +30,8 @@ export default function Home() {
               schedules, encouraging eco-friendly transportation and community
               building.
             </p>
-            <Link href="/registration">
-              <button className="btn">Get Started</button>
+            <Link href="/registration" className="btn">
+              Get started
             </Link>
           </div>
         </div>

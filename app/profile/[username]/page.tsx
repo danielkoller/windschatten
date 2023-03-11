@@ -58,8 +58,8 @@ export default async function ProfilePage({ params }: Props) {
             </tbody>
           </table>
         </div>
-        <Link href="/group">
-          <button className="btn mt-4">Join this group</button>
+        <Link href="/group" className="btn mt-4">
+          Join this group!
         </Link>
       </div>
     </div>
