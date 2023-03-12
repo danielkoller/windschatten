@@ -23,7 +23,7 @@ export async function POST(
   const user = token && (await getUserBySessionToken(token.value));
 
   if (!user) {
-    return NextResponse.json({ error: 'session token is not valid' });
+    return NextResponse.json({ error: 'Not authenticated!' }, { status: 401 });
   }
 
   const body = await request.json();

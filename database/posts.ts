@@ -7,40 +7,31 @@ export type Post = {
   userId: number;
 };
 
-// get all posts
-export const getAllPosts = cache(async () => {
-  const posts = await sql<Post[]>`
-    SELECT * FROM posts
-  `;
+export type PostWithUsername = Post & {
+  username: string;
+};
 
-  return posts;
-});
-
-// get a single post
-export const getPostById = cache(async (id: number) => {
-  const [post] = await sql<Post[]>`
-    SELECT
-      *
-    FROM
-      posts
-    WHERE
-      id = ${id}
-  `;
-  return post;
-});
-
-// get all posts by a user
-export const getPostsByUserId = cache(async (userId: number) => {
-  const posts = await sql<Post[]>`
-    SELECT
-      *
-    FROM
-      posts
-    WHERE
-      user_id = ${userId}
-  `;
-  return posts;
-});
+// get all posts from users with the same home and work districts as the logged in user who is viewing the posts
+export const getAllPostsFromUsersWithTheSameDistricts = cache(
+  async (homeDistrict: string, workDistrict: string) => {
+    const posts = await sql<PostWithUsername[]>`
+      SELECT
+        posts.id,
+        posts.content,
+        posts.user_id,
+        users.username
+      FROM
+        posts
+      INNER JOIN
+        users ON (
+          users.home_district = ${homeDistrict} AND
+          users.work_district = ${workDistrict} AND
+          users.id = posts.user_id
+        )
+    `;
+    return posts;
+  },
+);
 
 // create a post
 export const createPost = cache(async (text: string, userId: number) => {

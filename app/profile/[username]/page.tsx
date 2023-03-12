@@ -3,17 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { getAllPostsFromUsersWithTheSameDistricts } from '../../../database/posts';
 import { getValidSessionByToken } from '../../../database/sessions';
 import {
   getAllUsersWithTheSameDistricts,
   getFullUserByUsername,
-} from '../../../database/users.ts';
-import Map from '../../map/Map.tsx';
+} from '../../../database/users';
+import Map from '../../map/Map';
 
 type Props = { params: { username: string } };
 
 export default async function ProfilePage({ params }: Props) {
   const user = await getFullUserByUsername(params.username);
+  const posts = await getAllPostsFromUsersWithTheSameDistricts(
+    user.homeDistrict,
+    user.workDistrict,
+  );
 
   if (!user) {
     return <div>User not found</div>;
@@ -37,7 +42,7 @@ export default async function ProfilePage({ params }: Props) {
     sessionTokenCookie &&
     (await getValidSessionByToken(sessionTokenCookie.value));
 
-  // if yes redirect to home
+  // if no redirect to home
   if (!session) {
     redirect('/');
   }
@@ -77,6 +82,20 @@ export default async function ProfilePage({ params }: Props) {
         <Link href="/group" className="btn mt-4">
           Join this group!
         </Link>
+        <div className="flex flex-col items-center justify-center px-4 py-8">
+          <h3 className="text-4xl font-extrabold dark:text-white">Posts:</h3>
+          <div className="overflow-x-auto w-full mt-4">
+            <ul>
+              {posts.map((post) => (
+                <li key={`post-${post.id}`}>
+                  <p>
+                    {post.content} posted by {post.username}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
