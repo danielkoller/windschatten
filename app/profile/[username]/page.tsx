@@ -5,7 +5,7 @@ import {
   getAllUsersWithTheSameDistricts,
   getFullUserByUsername,
 } from '../../../database/users.ts';
-import Map from '../../route/Map.tsx';
+import Map from '../../map/Map.tsx';
 
 type Props = { params: { username: string } };
 

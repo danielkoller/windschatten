@@ -5,7 +5,7 @@ export const metadata = {
   description: 'You will never ride alone',
 };
 
-export default function RoutePage() {
+export default function MapPage() {
   return (
     <div>
       <h1>Get your fastest route here</h1>
