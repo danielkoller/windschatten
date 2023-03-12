@@ -1,6 +1,9 @@
 import { faUser, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { cookies } from 'next/headers';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { getValidSessionByToken } from '../../../database/sessions';
 import {
   getAllUsersWithTheSameDistricts,
   getFullUserByUsername,
@@ -25,6 +28,19 @@ export default async function ProfilePage({ params }: Props) {
   const otherUsers = usersWithSameDistricts.filter(
     (otherUser) => otherUser.id !== user.id,
   );
+
+  // check if i have a valid session
+
+  const sessionTokenCookie = cookies().get('sessionToken');
+
+  const session =
+    sessionTokenCookie &&
+    (await getValidSessionByToken(sessionTokenCookie.value));
+
+  // if yes redirect to home
+  if (!session) {
+    redirect('/');
+  }
 
   return (
     <div className=" flex flex-col items-center justify-center px-4 py-8">
