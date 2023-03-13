@@ -89,7 +89,11 @@ export default async function ProfilePage({ params }: Props) {
               {posts.map((post) => (
                 <li key={`post-${post.id}`}>
                   <p>
-                    {post.content} posted by {post.username}
+                    {post.content}{' '}
+                    {post.username === params.username
+                      ? 'posted by you'
+                      : `posted by ${post.username}`}
+                    {post.username === params.username}
                   </p>
                 </li>
               ))}
