@@ -110,7 +110,7 @@ export default function Map() {
 
   return (
     <div className="flex items-center justify-center py-8">
-      <div className="w-4/5 h-96 mr-8">
+      <div className="w-4/5 h-96 pr-5">
         <div className="rounded-lg overflow-hidden h-full">
           <GoogleMap
             center={center}

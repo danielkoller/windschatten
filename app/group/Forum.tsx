@@ -40,13 +40,14 @@ export default function Forum() {
       <Toaster />
       <form onSubmit={handleSubmit}>
         <label>
-          Content:
           <input
+            className="input input-bordered w-full"
+            placeholder="What's on your mind?"
             value={content}
             onChange={(event) => setContent(event.target.value)}
           />
         </label>
-        <button>Create Post</button>
+        <button className="btn mx-auto mt-4 block">Create Post</button>
       </form>
     </div>
   );
