@@ -12,6 +12,7 @@ const userSchema = z.object({
   password: z.string(),
   workDistrict: z.string(),
   homeDistrict: z.string(),
+  profilePic: z.string(),
 });
 
 export type RegisterResponseBody =
@@ -76,6 +77,7 @@ export const POST = async (request: NextRequest) => {
     passwordHash,
     result.data.homeDistrict,
     result.data.workDistrict,
+    result.data.profilePic,
   );
 
   if (!newUser) {

@@ -6,7 +6,7 @@ export async function up(sql) {
       password_hash VARCHAR(255) NOT NULL UNIQUE,
       home_district VARCHAR(80) NOT NULL,
       work_district VARCHAR(50) NOT NULL,
-      profile_pic TEXT
+      profile_pic TEXT NOT NULL
     );
 `;
 }

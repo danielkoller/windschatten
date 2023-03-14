@@ -3,10 +3,10 @@ import {
   faPlus,
   faSignIn,
   faSignOut,
-  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cookies } from 'next/headers';
+import Image from 'next/image';
 import Link from 'next/link';
 import { getUserBySessionToken } from '../database/users';
 
@@ -36,7 +36,11 @@ export default async function Header() {
             className="btn btn-ghost normal-case text-xl mr-4"
             href={`/profile/${user.username}`}
           >
-            <FontAwesomeIcon icon={faUser} className="mr-2" />
+            <div className="avatar mr-4">
+              <div className="w-12 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
+                <Image src={user.profilePic} width={32} height={32} />
+              </div>
+            </div>
             {user.username}
           </Link>
           <Link

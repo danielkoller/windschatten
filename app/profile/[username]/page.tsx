@@ -5,6 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cookies } from 'next/headers';
+import Image from 'next/image';
 import { redirect } from 'next/navigation';
 import { getAllPostsFromUsersWithTheSameDistricts } from '../../../database/posts';
 import { getValidSessionByToken } from '../../../database/sessions';
@@ -78,6 +79,7 @@ export default async function ProfilePage({ params }: Props) {
                               : 'self-start'
                           } `}
                         >
+                          {' '}
                           <div
                             className={`${
                               post.username === params.username
@@ -125,7 +127,15 @@ export default async function ProfilePage({ params }: Props) {
                     {otherUsers.map((otherUser) => (
                       <tr key={`user-${otherUser.id}`}>
                         <td>
-                          <FontAwesomeIcon icon={faUser} className="mr-2" />
+                          <div className="avatar mr-4">
+                            <div className="w-8 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
+                              <Image
+                                src={user.profilePic}
+                                width={32}
+                                height={32}
+                              />
+                            </div>
+                          </div>
                           {otherUser.username}
                         </td>
                       </tr>

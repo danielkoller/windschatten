@@ -14,39 +14,61 @@ export default function RegisterForm(props: { returnTo?: string | string[] }) {
 
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const response = await fetch('/api/register', {
-      method: 'POST',
-      body: JSON.stringify({
-        username,
-        password,
-        homeDistrict,
-        workDistrict,
-      }),
-    });
-    const data: RegisterResponseBody = await response.json();
+    const form = event.currentTarget;
+    const fileInput = Array.from(form.elements).find(
+      ({ name }) => name === 'file',
+    );
 
-    if ('errors' in data) {
-      // Show error message using react-hot-toast
-      data.errors.forEach((error) => {
-        toast.error(error.message);
+    const formData = new FormData();
+    if (fileInput !== undefined) {
+      for (const file of fileInput.files) {
+        formData.append('file', file);
+      }
+      formData.append('upload_preset', 'ehdbizqs');
+
+      const picData = await fetch(
+        'https://api.cloudinary.com/v1_1/dscaosd5d/image/upload',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      ).then((r) => r.json());
+
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        body: JSON.stringify({
+          username,
+          password,
+          homeDistrict,
+          workDistrict,
+          // Could also be empty string if no image was uploaded
+          profilePic: picData.secure_url || '/Cyclist.png',
+        }),
       });
-      return;
-    }
+      const data: RegisterResponseBody = await response.json();
 
-    if (
-      props.returnTo &&
-      !Array.isArray(props.returnTo) &&
-      // This is checking that the return to is a valid path in your application and not going to a different domain
-      /^\/[a-zA-Z0-9-?=/]*$/.test(props.returnTo)
-    ) {
-      router.push(props.returnTo);
-      return;
-    }
+      if ('errors' in data) {
+        // Show error message using react-hot-toast
+        data.errors.forEach((error) => {
+          toast.error(error.message);
+        });
+        return;
+      }
 
-    // Show success message using react-hot-toast
-    toast.success('Registration successful');
-    router.replace(`/profile/${data.user.username}`);
-    router.refresh();
+      if (
+        props.returnTo &&
+        !Array.isArray(props.returnTo) &&
+        // This is checking that the return to is a valid path in your application and not going to a different domain
+        /^\/[a-zA-Z0-9-?=/]*$/.test(props.returnTo)
+      ) {
+        router.push(props.returnTo);
+        return;
+      }
+      // Show success message using react-hot-toast
+      toast.success('Registration successful');
+      router.replace(`/profile/${data.user.username}`);
+      router.refresh();
+    }
   };
 
   return (
@@ -133,6 +155,16 @@ export default function RegisterForm(props: { returnTo?: string | string[] }) {
                         </option>
                       ))}
                     </select>
+                  </div>
+                  <div className="form-control">
+                    <label htmlFor="file" className="label">
+                      <span className="label-text">Profile picture:</span>
+                    </label>
+                    <input
+                      className="file-input file-input-bordered w-full max-w-xs"
+                      type="file"
+                      name="file"
+                    />
                   </div>
                   <div className="form-control mt-6">
                     <button className="btn">Register</button>
