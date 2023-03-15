@@ -50,7 +50,7 @@ export default async function ProfilePage({ params }: Props) {
 
   return (
     <div className="flex flex-col items-center justify-center py-8 px-4">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white">
         {user.homeDistrict} - {user.workDistrict}
       </h1>
       <div className="w-full my-8">

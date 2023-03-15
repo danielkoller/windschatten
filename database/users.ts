@@ -20,6 +20,28 @@ type UserWithProfilePic = User & {
   profilePic: string;
 };
 
+// A user wants to change their home district and/or work district
+export const updateUserDistricts = cache(
+  async (id: number, homeDistrict: string, workDistrict: string) => {
+    const [user] = await sql<UserWithProfilePicAndDistricts[]>`
+      UPDATE
+        users
+      SET
+        home_district = ${homeDistrict},
+        work_district = ${workDistrict}
+      WHERE
+        id = ${id}
+      RETURNING
+        id,
+        username,
+        home_district AS "homeDistrict",
+        work_district AS "workDistrict",
+        profile_pic AS "profilePic"
+    `;
+    return user;
+  },
+);
+
 // We use this to get the username when we have the user id
 export const getUsernameById = cache(async (id: number) => {
   const [user] = await sql<{ username: string }[]>`

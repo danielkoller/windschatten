@@ -12,7 +12,6 @@ import {
   Autocomplete,
   DirectionsRenderer,
   GoogleMap,
-  Marker,
   useJsApiLoader,
 } from '@react-google-maps/api';
 import { useRef, useState } from 'react';
