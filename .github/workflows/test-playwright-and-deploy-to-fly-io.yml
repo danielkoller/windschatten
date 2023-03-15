@@ -1,0 +1,65 @@
+name: Playwright Tests and Deploy to Fly.io
+on: push
+
+jobs:
+  e2e-tests:
+    name: Playwright Tests and Deploy to Fly.io
+    runs-on: ubuntu-latest # or macos-latest, windows-latest
+    # Update env variables with your own database credentials
+    env:
+      PGHOST: localhost
+      PGDATABASE: windschatten
+      PGUSERNAME: windschatten
+      PGPASSWORD: windschatten
+    steps:
+      - name: Start preinstalled PostgreSQL on Ubuntu
+        run: |
+          sudo systemctl start postgresql.service
+          pg_isready
+      - name: Create database user
+        run: |
+          sudo -u postgres psql --command="CREATE USER windschatten PASSWORD 'windschatten'" --command="\du"
+      - name: Create database and allow user
+        run: |
+          sudo -u postgres createdb --owner=windschatten windschatten
+      - uses: actions/checkout@v3
+      # Use the official setup-node action (sets up Node.js):
+      # https://github.com/actions/setup-node
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install dependencies (with cache)
+        uses: bahmutov/npm-install@v1
+      - name: Install SafeQL if not yet installed (eg. on Windows dev machines)
+        run: grep package.json -e '@ts-safeql/eslint-plugin' || yarn add @ts-safeql/eslint-plugin libpg-query
+      - run: yarn migrate up
+      # Also generates next-env.d.ts, required for tsc
+      - name: Build Next.js app
+        run: yarn build
+      - name: Run TypeScript Compiler
+        run: yarn tsc
+      - name: Run ESLint
+        run: yarn eslint . --max-warnings 0
+      - name: Run Stylelint
+        run: yarn stylelint '**/*.{css,scss,less,js,tsx}'
+      - name: Install Playwright
+        run: yarn playwright install --with-deps chromium
+      - name: Run tests
+        run: yarn playwright test
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: playwright-screenshots-videos
+          path: playwright/test-results/
+  deploy:
+    name: Deploy to Fly.io
+    runs-on: ubuntu-latest
+    needs: e2e-tests
+    if: github.ref == 'refs/heads/main'
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only

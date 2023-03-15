@@ -26,6 +26,7 @@
     "dotenv-cli": "^7.0.0",
     "dotenv-safe": "^8.2.0",
     "eslint-config-next": "^13.2.3",
+    "jest": "^29.5.0",
     "ley": "^0.8.1",
     "next": "^13.2.3",
     "patch-package": "^6.5.1",
