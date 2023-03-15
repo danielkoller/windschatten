@@ -1,8 +1,4 @@
-import {
-  faComments,
-  faUser,
-  faUserGroup,
-} from '@fortawesome/free-solid-svg-icons';
+import { faComments, faUserGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
@@ -66,7 +62,7 @@ export default async function ProfilePage({ params }: Props) {
             <div className="flex flex-col items-center justify-center">
               <FontAwesomeIcon icon={faComments} className="text-4xl mb-2" />
               <h3 className="text-4xl font-extrabold dark:text-white">Chat</h3>
-              <div className="w-full h-96 my-4 overflow-y-auto">
+              <div className="w-full h-96 overflow-y-auto">
                 <div className="bg-gray-600 rounded-lg p-4">
                   <div className="overflow-y-auto w-full mt-4">
                     <div className="flex flex-col items-start">
@@ -77,29 +73,58 @@ export default async function ProfilePage({ params }: Props) {
                             post.username === params.username
                               ? 'self-end'
                               : 'self-start'
-                          } `}
+                          } flex`}
                         >
-                          {' '}
+                          {post.username !== params.username && (
+                            <div className="chat-image avatar mr-2 ">
+                              <div className="w-12 rounded-full">
+                                <Image
+                                  src={post.profilePic}
+                                  width={32}
+                                  height={32}
+                                />
+                              </div>
+                            </div>
+                          )}
                           <div
                             className={`${
                               post.username === params.username
-                                ? 'chat-header'
-                                : 'chat-header'
-                            } mt-2`}
+                                ? 'self-end'
+                                : 'self-start'
+                            } `}
                           >
-                            {post.username === params.username
-                              ? 'You'
-                              : post.username}
+                            <div
+                              className={`${
+                                post.username === params.username
+                                  ? 'chat-header'
+                                  : 'chat-header'
+                              } mt-2`}
+                            >
+                              {post.username === params.username
+                                ? 'You'
+                                : post.username}
+                            </div>
+                            <div
+                              className={`${
+                                post.username === params.username
+                                  ? 'chat-bubble'
+                                  : 'chat-bubble'
+                              } max-w-md`}
+                            >
+                              {post.content}
+                            </div>
                           </div>
-                          <div
-                            className={`${
-                              post.username === params.username
-                                ? 'chat-bubble'
-                                : 'chat-bubble'
-                            } max-w-md`}
-                          >
-                            {post.content}
-                          </div>
+                          {post.username === params.username && (
+                            <div className="chat-image avatar pl-2 ">
+                              <div className="w-12 rounded-full">
+                                <Image
+                                  src={user.profilePic}
+                                  width={32}
+                                  height={32}
+                                />
+                              </div>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -128,9 +153,9 @@ export default async function ProfilePage({ params }: Props) {
                       <tr key={`user-${otherUser.id}`}>
                         <td>
                           <div className="avatar mr-4">
-                            <div className="w-8 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
+                            <div className="w-8 rounded-full">
                               <Image
-                                src={user.profilePic}
+                                src={otherUser.profilePic}
                                 width={32}
                                 height={32}
                               />

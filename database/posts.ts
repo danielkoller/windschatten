@@ -7,19 +7,21 @@ export type Post = {
   userId: number;
 };
 
-export type PostWithUsername = Post & {
+export type PostWithUsernameAndProfilePic = Post & {
   username: string;
+  profilePic: string;
 };
 
 // get all posts from users with the same home and work districts as the logged in user who is viewing the posts
 export const getAllPostsFromUsersWithTheSameDistricts = cache(
   async (homeDistrict: string, workDistrict: string) => {
-    const posts = await sql<PostWithUsername[]>`
+    const posts = await sql<PostWithUsernameAndProfilePic[]>`
       SELECT
         posts.id,
         posts.content,
         posts.user_id,
-        users.username
+        users.username,
+        users.profile_Pic
       FROM
         posts
       INNER JOIN

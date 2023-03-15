@@ -16,6 +16,10 @@ type UserWithProfilePicAndDistricts = User & {
   profilePic: string;
 };
 
+type UserWithProfilePic = User & {
+  profilePic: string;
+};
+
 // We use this to get the username when we have the user id
 export const getUsernameById = cache(async (id: number) => {
   const [user] = await sql<{ username: string }[]>`
@@ -54,10 +58,11 @@ export const getUserBySessionToken = cache(async (token: string) => {
 // We use this to get all users with the same home and work districts
 export const getAllUsersWithTheSameDistricts = cache(
   async (homeDistrict: string, workDistrict: string) => {
-    const users = await sql<User[]>`
+    const users = await sql<UserWithProfilePic[]>`
       SELECT
         id,
-        username
+        username,
+        profile_pic AS "profilePic"
       FROM
         users
       WHERE
