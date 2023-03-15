@@ -124,7 +124,6 @@ export default function Map() {
             }}
             onLoad={() => setMap(map)}
           >
-            <Marker position={center} />
             {directionsResponse && (
               <DirectionsRenderer directions={directionsResponse} />
             )}
