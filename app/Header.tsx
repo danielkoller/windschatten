@@ -33,11 +33,11 @@ export default async function Header() {
       {user ? (
         <div className="flex items-center">
           <Link
-            className="btn btn-ghost normal-case text-xl mr-4"
+            className="btn btn-ghost normal-case text-xl mr-2"
             href={`/profile/${user.username}`}
           >
             <div className="avatar mr-4">
-              <div className="w-12 rounded-full ring ring-white ring-offset-base-100 ring-offset-2">
+              <div className="w-10 rounded-full ring ring-white">
                 <Image src={user.profilePic} width={32} height={32} />
               </div>
             </div>

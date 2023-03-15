@@ -42,7 +42,7 @@ export default function RegisterForm(props: { returnTo?: string | string[] }) {
           homeDistrict,
           workDistrict,
           // Could also be empty string if no image was uploaded
-          profilePic: picData.secure_url || '/Cyclist.png',
+          profilePic: picData.secure_url || '/Cyclist.svg',
         }),
       });
       const data: RegisterResponseBody = await response.json();

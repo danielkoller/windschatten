@@ -61,7 +61,9 @@ export default async function ProfilePage({ params }: Props) {
           <div className="w-2/3 pr-5">
             <div className="flex flex-col items-center justify-center">
               <FontAwesomeIcon icon={faComments} className="text-4xl mb-2" />
-              <h3 className="text-4xl font-extrabold dark:text-white">Chat</h3>
+              <h3 className="text-4xl font-extrabold dark:text-white mb-4">
+                Chat
+              </h3>
               <div className="w-full h-96 overflow-y-auto">
                 <div className="bg-gray-600 rounded-lg p-4">
                   <div className="overflow-y-auto w-full mt-4">
@@ -77,7 +79,7 @@ export default async function ProfilePage({ params }: Props) {
                         >
                           {post.username !== params.username && (
                             <div className="chat-image avatar mr-2 ">
-                              <div className="w-12 rounded-full">
+                              <div className="w-10 rounded-full">
                                 <Image
                                   src={post.profilePic}
                                   width={32}
@@ -116,7 +118,7 @@ export default async function ProfilePage({ params }: Props) {
                           </div>
                           {post.username === params.username && (
                             <div className="chat-image avatar pl-2 ">
-                              <div className="w-12 rounded-full">
+                              <div className="w-10 rounded-full">
                                 <Image
                                   src={user.profilePic}
                                   width={32}
@@ -152,8 +154,8 @@ export default async function ProfilePage({ params }: Props) {
                     {otherUsers.map((otherUser) => (
                       <tr key={`user-${otherUser.id}`}>
                         <td>
-                          <div className="avatar mr-4">
-                            <div className="w-8 rounded-full">
+                          <div className="avatar mr-4 ">
+                            <div className="w-10 rounded-full">
                               <Image
                                 src={otherUser.profilePic}
                                 width={32}
