@@ -31,11 +31,21 @@ export default function Map() {
     libraries: ['places'],
   });
 
-  // Define the bounds of the map for Autocomplete
-  const viennaBounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(48.118068, 16.182671),
-    new google.maps.LatLng(48.323075, 16.577265),
-  );
+  async function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (
+      event.key === 'Enter' &&
+      originRef.current &&
+      destinationRef.current &&
+      originRef.current.value !== '' &&
+      destinationRef.current.value !== ''
+    ) {
+      try {
+        await calculateRoute();
+      } catch (error) {
+        console.error('Error calculating route:', error);
+      }
+    }
+  }
 
   // Define the state variables
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -147,8 +157,6 @@ export default function Map() {
           <div className="mr-4">
             <Autocomplete
               options={{
-                bounds: viennaBounds,
-                strictBounds: true,
                 componentRestrictions: {
                   country: 'at',
                 },
@@ -158,14 +166,13 @@ export default function Map() {
                 placeholder="Origin"
                 className="input input-bordered w-full max-w-xs"
                 ref={originRef}
+                onKeyDown={handleKeyDown}
               />
             </Autocomplete>
           </div>
           <div className="mr-4">
             <Autocomplete
               options={{
-                bounds: viennaBounds,
-                strictBounds: true,
                 componentRestrictions: {
                   country: 'at',
                 },
@@ -175,6 +182,7 @@ export default function Map() {
                 placeholder="Destination"
                 className="input input-bordered w-full max-w-xs"
                 ref={destinationRef}
+                onKeyDown={handleKeyDown}
               />
             </Autocomplete>
           </div>
