@@ -78,8 +78,8 @@ export default function Map() {
 
     // Set the state variables for the directions response, distance, and duration by bike
     setDirectionsResponse(bicyclingResults);
-    setDistance(bicyclingResults?.routes[0]?.legs[0]?.distance?.text ?? '');
-    setDuration(bicyclingResults?.routes[0]?.legs[0]?.duration?.text ?? '');
+    setDistance(bicyclingResults.routes[0]?.legs[0]?.distance?.text ?? '');
+    setDuration(bicyclingResults.routes[0]?.legs[0]?.duration?.text ?? '');
 
     // Calculate the duration by car
     const drivingResults = await directionsService.route({
@@ -90,8 +90,8 @@ export default function Map() {
 
     // Set the state variable for the duration by car
     const durationByCarValue =
-      (drivingResults?.routes[0]?.legs[0]?.duration?.value ?? 0) / 60;
-    setDurationByCar(drivingResults?.routes[0]?.legs[0]?.duration?.text ?? '');
+      (drivingResults.routes[0]?.legs[0]?.duration?.value ?? 0) / 60;
+    setDurationByCar(drivingResults.routes[0]?.legs[0]?.duration?.text ?? '');
 
     // Calculate the average CO2 emissions for a car ride based on the duration of the trip in minutes
     const averageEmissionsPerMinute = 0.195;
@@ -104,7 +104,7 @@ export default function Map() {
     const averageFuelConsumption = 7.4; // liters per 100 km
     const fuelPrice = 1.5; // Euro per liter in Austria
     const distanceInKm =
-      (drivingResults?.routes[0]?.legs[0]?.distance?.value ?? 0) / 1000;
+      (drivingResults.routes[0]?.legs[0]?.distance?.value ?? 0) / 1000;
     const fuelConsumption = (distanceInKm / 100) * averageFuelConsumption;
     const gasCostValue = (
       fuelConsumption *
