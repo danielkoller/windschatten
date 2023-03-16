@@ -27,9 +27,15 @@ const center = { lat: 48.20849, lng: 16.373819 };
 export default function Map() {
   // Load the Google Maps JavaScript API and the Places library using the useJsApiLoader hook
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? '',
     libraries: ['places'],
   });
+
+  // Define the bounds of the map for Autocomplete
+  const viennaBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(48.118068, 16.182671),
+    new google.maps.LatLng(48.323075, 16.577265),
+  );
 
   // Define the state variables
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -72,8 +78,8 @@ export default function Map() {
 
     // Set the state variables for the directions response, distance, and duration by bike
     setDirectionsResponse(bicyclingResults);
-    setDistance(bicyclingResults.routes[0].legs[0].distance.text);
-    setDuration(bicyclingResults.routes[0].legs[0].duration.text);
+    setDistance(bicyclingResults?.routes[0]?.legs[0]?.distance?.text ?? '');
+    setDuration(bicyclingResults?.routes[0]?.legs[0]?.duration?.text ?? '');
 
     // Calculate the duration by car
     const drivingResults = await directionsService.route({
@@ -84,8 +90,8 @@ export default function Map() {
 
     // Set the state variable for the duration by car
     const durationByCarValue =
-      drivingResults.routes[0].legs[0].duration.value / 60;
-    setDurationByCar(drivingResults.routes[0].legs[0].duration.text);
+      (drivingResults?.routes[0]?.legs[0]?.duration?.value ?? 0) / 60;
+    setDurationByCar(drivingResults?.routes[0]?.legs[0]?.duration?.text ?? '');
 
     // Calculate the average CO2 emissions for a car ride based on the duration of the trip in minutes
     const averageEmissionsPerMinute = 0.195;
@@ -97,7 +103,8 @@ export default function Map() {
     // Calculate the gas cost for the car ride based on the duration of the trip in minutes
     const averageFuelConsumption = 7.4; // liters per 100 km
     const fuelPrice = 1.5; // Euro per liter in Austria
-    const distanceInKm = drivingResults.routes[0].legs[0].distance.value / 1000;
+    const distanceInKm =
+      (drivingResults?.routes[0]?.legs[0]?.distance?.value ?? 0) / 1000;
     const fuelConsumption = (distanceInKm / 100) * averageFuelConsumption;
     const gasCostValue = (
       fuelConsumption *
@@ -138,7 +145,15 @@ export default function Map() {
         </div>
         <div className="flex items-center mb-4">
           <div className="mr-4">
-            <Autocomplete>
+            <Autocomplete
+              options={{
+                bounds: viennaBounds,
+                strictBounds: true,
+                componentRestrictions: {
+                  country: 'at',
+                },
+              }}
+            >
               <input
                 placeholder="Origin"
                 className="input input-bordered w-full max-w-xs"
@@ -147,7 +162,15 @@ export default function Map() {
             </Autocomplete>
           </div>
           <div className="mr-4">
-            <Autocomplete>
+            <Autocomplete
+              options={{
+                bounds: viennaBounds,
+                strictBounds: true,
+                componentRestrictions: {
+                  country: 'at',
+                },
+              }}
+            >
               <input
                 placeholder="Destination"
                 className="input input-bordered w-full max-w-xs"

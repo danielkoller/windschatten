@@ -12,7 +12,7 @@ export type PostResponseBodyPost = { error: string } | { post: Post };
 
 export async function POST(
   request: NextRequest,
-): Promise<NextResponse<PostsResponseBodyPost>> {
+): Promise<NextResponse<PostResponseBodyPost>> {
   // this is a protected Route Handler
   // 1. get the session token from the cookie
   const cookieStore = cookies();

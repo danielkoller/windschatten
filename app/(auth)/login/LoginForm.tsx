@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { RegisterResponseBody } from '../../api/(auth)/register/route';
 
@@ -9,7 +9,7 @@ export default function LoginForm(props: { returnTo?: string | string[] }) {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const response = await fetch('/api/login', {
       method: 'POST',

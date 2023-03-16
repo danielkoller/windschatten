@@ -1,3 +1,34 @@
+diff --git a/node_modules/next/dist/build/webpack/plugins/next-types-plugin.js b/node_modules/next/dist/build/webpack/plugins/next-types-plugin.js
+index 9b161b5..f4914f4 100644
+--- a/node_modules/next/dist/build/webpack/plugins/next-types-plugin.js
++++ b/node_modules/next/dist/build/webpack/plugins/next-types-plugin.js
+@@ -293,7 +293,7 @@ class NextTypesPlugin {
+         if (!this.typedRoutes) return;
+         const isApp = filePath.startsWith(this.appDir + _path.default.sep);
+         // Filter out non-page files in app dir
+-        if (isApp && !/[/\\]page\.[^.]+$/.test(filePath)) {
++        if (isApp && !/[/\\](?:page|route)\.[^.]+$/.test(filePath)) {
+             return;
+         }
+         // Filter out non-page files in pages dir
+@@ -326,7 +326,7 @@ class NextTypesPlugin {
+             const relativePathToApp = _path.default.relative(this.appDir, mod.resource);
+             const relativePathToRoot = _path.default.relative(this.dir, mod.resource);
+             if (!this.dev) {
+-                if (IS_PAGE) {
++                if (IS_PAGE || /[/\\]route\.[^.]+$/.test(mod.resource)) {
+                     this.collectPage(mod.resource);
+                 }
+             }
+@@ -363,7 +363,7 @@ class NextTypesPlugin {
+                     chunkGroup.chunks.forEach((chunk)=>{
+                         if (!chunk.name) return;
+                         // Here we only track page chunks.
+-                        if (!chunk.name.startsWith("pages/") && !(chunk.name.startsWith("app/") && chunk.name.endsWith("/page"))) {
++                        if (!chunk.name.startsWith("pages/") && !(chunk.name.startsWith("app/") && (chunk.name.endsWith("/page") || chunk.name.endsWith('/route')))) {
+                             return;
+                         }
+                         const chunkModules = compilation.chunkGraph.getChunkModulesIterable(chunk);
 diff --git a/node_modules/next/dist/client/components/layout-router.js b/node_modules/next/dist/client/components/layout-router.js
 index 9b60a45..dd0639d 100644
 --- a/node_modules/next/dist/client/components/layout-router.js
@@ -22,3 +53,25 @@ index d15ce7f..369e036 100644
      } else {
          navigate();
      }
+diff --git a/node_modules/next/dist/server/web/spec-extension/response.d.ts b/node_modules/next/dist/server/web/spec-extension/response.d.ts
+index 268f52b..6ef065b 100644
+--- a/node_modules/next/dist/server/web/spec-extension/response.d.ts
++++ b/node_modules/next/dist/server/web/spec-extension/response.d.ts
+@@ -2,14 +2,15 @@ import type { I18NConfig } from '../../config-shared';
+ import { NextURL } from '../next-url';
+ import { ResponseCookies } from './cookies';
+ declare const INTERNALS: unique symbol;
+-export declare class NextResponse extends Response {
++export declare class NextResponse<B = void> extends Response {
+     [INTERNALS]: {
+         cookies: ResponseCookies;
+         url?: NextURL;
++        B: B
+     };
+     constructor(body?: BodyInit | null, init?: ResponseInit);
+     get cookies(): ResponseCookies;
+-    static json(body: any, init?: ResponseInit): NextResponse;
++    static json<T>(body: T, init?: ResponseInit): NextResponse<T>;
+     static redirect(url: string | NextURL | URL, init?: number | ResponseInit): NextResponse;
+     static rewrite(destination: string | NextURL | URL, init?: MiddlewareResponseInit): NextResponse;
+     static next(init?: MiddlewareResponseInit): NextResponse;

@@ -10,8 +10,7 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    "next-env.d.ts",
-    "/Users/danielkoller/projects/windschatten/.next/types/**/*.ts"
+    "next-env.d.ts"
   ],
   "compilerOptions": {
     "jsx": "preserve"

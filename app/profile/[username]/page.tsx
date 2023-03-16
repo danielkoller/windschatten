@@ -16,10 +16,12 @@ type Props = { params: { username: string } };
 
 export default async function ProfilePage({ params }: Props) {
   const user = await getFullUserByUsername(params.username);
-  const posts = await getAllPostsFromUsersWithTheSameDistricts(
-    user.homeDistrict,
-    user.workDistrict,
-  );
+  const posts = user
+    ? await getAllPostsFromUsersWithTheSameDistricts(
+        user.homeDistrict,
+        user.workDistrict,
+      )
+    : [];
 
   if (!user) {
     return <div>User not found</div>;
@@ -82,6 +84,7 @@ export default async function ProfilePage({ params }: Props) {
                               <div className="w-10 rounded-full">
                                 <Image
                                   src={post.profilePic}
+                                  alt="Profile Picture of all the other users"
                                   width={32}
                                   height={32}
                                 />
@@ -121,6 +124,7 @@ export default async function ProfilePage({ params }: Props) {
                               <div className="w-10 rounded-full">
                                 <Image
                                   src={user.profilePic}
+                                  alt="Profile Picture of the current logged in user"
                                   width={32}
                                   height={32}
                                 />
@@ -142,8 +146,7 @@ export default async function ProfilePage({ params }: Props) {
               <h3 className="text-lg font-bold my-4 items-center">
                 Connect with cyclists with the same route
               </h3>
-
-              <div className="overflow-y-auto w-full mt-4">
+              <div className="overflow-y-auto h-96 w-full mt-4">
                 <table className="table table-zebra w-full pl-5">
                   <thead>
                     <tr>
@@ -158,6 +161,7 @@ export default async function ProfilePage({ params }: Props) {
                             <div className="w-10 rounded-full">
                               <Image
                                 src={otherUser.profilePic}
+                                alt="Profile Picture of all the other users"
                                 width={32}
                                 height={32}
                               />

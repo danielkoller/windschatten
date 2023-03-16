@@ -1,6 +1,7 @@
 'use client';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { toast, Toaster } from 'react-hot-toast';
 import { districts } from '../../../database/districts';
 import { RegisterResponseBody } from '../../api/(auth)/register/route';
@@ -10,19 +11,37 @@ export default function RegisterForm(props: { returnTo?: string | string[] }) {
   const [password, setPassword] = useState('');
   const [homeDistrict, setHomeDistrict] = useState('');
   const [workDistrict, setWorkDistrict] = useState('');
+  const [previewURL, setPreviewURL] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const router = useRouter();
 
-  const handleSubmit = async (event: any) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setPreviewURL(e.target?.result as string);
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    } else {
+      setPreviewURL(null);
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
-    const fileInput = Array.from(form.elements).find(
-      ({ name }) => name === 'file',
-    );
-
-    const formData = new FormData();
-    if (fileInput !== undefined) {
-      for (const file of fileInput.files) {
-        formData.append('file', file);
+    const fileInput = Array.from(form.elements)
+      .filter(
+        (element) =>
+          element instanceof HTMLInputElement && element.type === 'file',
+      )
+      .pop() as HTMLInputElement | undefined;
+    if (fileInput) {
+      const formData = new FormData();
+      if (fileInput.files !== null) {
+        for (const file of fileInput.files) {
+          formData.append('file', file);
+        }
       }
       formData.append('upload_preset', 'ehdbizqs');
 
@@ -164,7 +183,25 @@ export default function RegisterForm(props: { returnTo?: string | string[] }) {
                       className="file-input file-input-bordered w-full max-w-xs"
                       type="file"
                       name="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
                     />
+                  </div>
+                  <div className="form-control">
+                    <label htmlFor="preview" className="label">
+                      <span className="label-text">
+                        Profile picture preview:
+                      </span>
+                    </label>
+                    {!!previewURL && (
+                      <Image
+                        src={previewURL}
+                        height={200}
+                        width={200}
+                        alt="Profile picture preview"
+                        className="w-full max-w-xs h-auto"
+                      />
+                    )}
                   </div>
                   <div className="form-control mt-6">
                     <button className="btn">Register</button>

@@ -23,7 +23,7 @@ export default function Forum() {
 
     if ('errors' in data) {
       // Show error message using react-hot-toast
-      data.errors.forEach((error) => {
+      (data.errors as Array<{ message: string }>).forEach((error) => {
         toast.error(error.message);
       });
       return;
@@ -36,7 +36,7 @@ export default function Forum() {
   }
 
   return (
-    <div>
+    <div className="mt-4">
       <Toaster />
       <form onSubmit={handleSubmit}>
         <label>
