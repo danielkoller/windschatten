@@ -12,6 +12,12 @@ import {
 import Forum from '../../group/Forum';
 import Map from '../../map/Map';
 
+export const metadata = {
+  title: 'Profile',
+  description:
+    'This is the profile page of Windschatten. Here you can see the best route for you to take to work and home by bicycle. You can also see the posts of other users in your district and interact with them. So you will never ride alone again!',
+};
+
 type Props = { params: { username: string } };
 
 export default async function ProfilePage({ params }: Props) {

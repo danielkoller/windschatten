@@ -9,7 +9,8 @@ config.autoAddCss = false;
 
 export const metadata = {
   title: 'Windschatten',
-  description: 'You will never ride alone',
+  description:
+    'Windschatten is an app that helps cyclists in Vienna find commuting partners. It connects people with similar routes and schedules, encouraging eco-friendly transportation and community building. The app shows you the best route for you to take to work and home by bicycle. You can also see the posts of other users in your district and interact with them. So you will never ride alone again!',
 };
 
 export default function Home() {

@@ -21,6 +21,8 @@ type Props = {
   children: React.ReactNode;
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function RootLayout(props: Props) {
   // 1. get the session token from the cookie
   const cookieStore = cookies();
@@ -85,7 +87,7 @@ export default async function RootLayout(props: Props) {
                 className="btn btn-ghost normal-case text-base sm:text-xl"
                 href="/login"
               >
-                <FontAwesomeIcon icon={faSignIn} className="mr-2" />
+                <FontAwesomeIcon icon={faSignIn} className="mr-" />
                 Login
               </Link>
             </div>
