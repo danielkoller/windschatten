@@ -87,7 +87,7 @@ export default async function RootLayout(props: Props) {
                 className="btn btn-ghost normal-case text-base sm:text-xl"
                 href="/login"
               >
-                <FontAwesomeIcon icon={faSignIn} className="mr-" />
+                <FontAwesomeIcon icon={faSignIn} className="mr-2" />
                 Login
               </Link>
             </div>
