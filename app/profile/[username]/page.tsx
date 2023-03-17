@@ -52,15 +52,15 @@ export default async function ProfilePage({ params }: Props) {
 
   return (
     <div className="flex flex-col items-center justify-center py-8 px-4">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white">
+      <h1 className=" text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white text-center">
         {user.homeDistrict} - {user.workDistrict}
       </h1>
-      <div className="w-full my-8">
+      <div className="w-full">
         <Map />
       </div>
       <div className="w-full">
-        <div className="flex flex-row items-start justify-center">
-          <div className="w-2/3 pr-5">
+        <div className="flex flex-col md:flex-row items-start justify-center">
+          <div className="w-full md:w-2/3 pr-0 md:pr-5">
             <div className="flex flex-col items-center justify-center">
               <FontAwesomeIcon icon={faComments} className="text-4xl mb-2" />
               <h3 className="text-4xl font-extrabold dark:text-white mb-4">
@@ -140,7 +140,7 @@ export default async function ProfilePage({ params }: Props) {
               <Forum />
             </div>
           </div>
-          <div className="w-1/3">
+          <div className="w-full md:w-1/3">
             <div className="flex flex-col items-center justify-center">
               <FontAwesomeIcon icon={faUserGroup} className="text-4xl mb-2" />
               <h3 className="text-lg font-bold my-4 items-center">

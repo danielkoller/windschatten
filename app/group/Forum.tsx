@@ -36,18 +36,20 @@ export default function Forum() {
   }
 
   return (
-    <div className="mt-4">
+    <div>
       <Toaster />
-      <form onSubmit={handleSubmit}>
-        <label>
-          <input
-            className="input input-bordered w-full"
-            placeholder="What's on your mind?"
-            value={content}
-            onChange={(event) => setContent(event.target.value)}
-          />
-        </label>
-        <button className="btn mx-auto mt-4 block">Create Post</button>
+      <form onSubmit={handleSubmit} className="w-full">
+        <div className="card-body">
+          <label className="w-full flex items-center">
+            <input
+              className="input input-bordered flex-grow mr-4"
+              placeholder="What's on your mind?"
+              value={content}
+              onChange={(event) => setContent(event.target.value)}
+            />
+            <button className="btn">Create Post</button>
+          </label>
+        </div>
       </form>
     </div>
   );

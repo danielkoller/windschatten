@@ -125,8 +125,8 @@ export default function Map() {
   }
 
   return (
-    <div className="flex items-center justify-center py-8">
-      <div className="w-4/5 h-96 pr-5">
+    <div className="flex flex-col lg:flex-row items-center justify-center py-8">
+      <div className="w-full lg:w-4/5 h-96 mb-6 lg:mb-0 lg:pr-5">
         <div className="rounded-lg overflow-hidden h-full">
           <GoogleMap
             center={center}
@@ -146,15 +146,15 @@ export default function Map() {
           </GoogleMap>
         </div>
       </div>
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full lg:w-auto">
         <div className="flex flex-col items-center">
           <FontAwesomeIcon icon={faMap} className="text-4xl" />
           <h2 className="text-lg font-bold my-4 items-center">
             Find your fastest route here
           </h2>
         </div>
-        <div className="flex items-center mb-4">
-          <div className="mr-4">
+        <div className="flex flex-col lg:flex-row items-center mb-4">
+          <div className="mb-4 w-full lg:mb-0 lg:mr-4">
             <Autocomplete
               options={{
                 componentRestrictions: {
@@ -164,13 +164,13 @@ export default function Map() {
             >
               <input
                 placeholder="Origin"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full lg:max-w-xs"
                 ref={originRef}
                 onKeyDown={handleKeyDown}
               />
             </Autocomplete>
           </div>
-          <div className="mr-4">
+          <div className="mb-4 w-full lg:mb-0 lg:mr-4">
             <Autocomplete
               options={{
                 componentRestrictions: {
@@ -180,19 +180,19 @@ export default function Map() {
             >
               <input
                 placeholder="Destination"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered w-full lg:max-w-xs"
                 ref={destinationRef}
                 onKeyDown={handleKeyDown}
               />
             </Autocomplete>
           </div>
-          <div>
-            <button className="btn" onClick={calculateRoute}>
+          <div className="w-full">
+            <button className="btn w-full lg:w-auto" onClick={calculateRoute}>
               Calculate Route
             </button>
           </div>
         </div>
-        <div className="bg-gray-600 rounded-lg p-4">
+        <div className="bg-gray-600 rounded-lg p-4 w-full lg:w-auto max-w-full">
           <div>
             <span className="font-bold">
               <FontAwesomeIcon icon={faRoad} className="mr-3" />

@@ -38,14 +38,17 @@ export default async function RootLayout(props: Props) {
       <body>
         <div className="flex justify-between items-center bg-base-100 p-4">
           <div className="flex items-center">
-            <Link className="btn btn-ghost normal-case text-xl" href="/">
+            <Link
+              className="btn btn-ghost normal-case text-base sm:text-xl"
+              href="/"
+            >
               <FontAwesomeIcon icon={faHome} className="mr-2" /> Home
             </Link>
           </div>
           {user ? (
             <div className="flex items-center">
               <Link
-                className="btn btn-ghost normal-case text-xl mr-2"
+                className="btn btn-ghost normal-case text-base sm:text-xl"
                 href={`/profile/${user.username}`}
               >
                 <div className="avatar mr-4">
@@ -61,7 +64,7 @@ export default async function RootLayout(props: Props) {
                 {user.username}
               </Link>
               <Link
-                className="btn btn-ghost normal-case text-xl"
+                className="btn btn-ghost normal-case text-base sm:text-xl"
                 href="/logout"
                 prefetch={false}
               >
@@ -72,13 +75,16 @@ export default async function RootLayout(props: Props) {
           ) : (
             <div className="flex justify-end flex-1">
               <Link
-                className="btn btn-ghost normal-case text-xl mr-4"
+                className="btn btn-ghost normal-case text-base sm:text-xl"
                 href="/registration"
               >
                 <FontAwesomeIcon icon={faPlus} className="mr-2" />
                 Registration
               </Link>
-              <Link className="btn btn-ghost normal-case text-xl" href="/login">
+              <Link
+                className="btn btn-ghost normal-case text-base sm:text-xl"
+                href="/login"
+              >
                 <FontAwesomeIcon icon={faSignIn} className="mr-2" />
                 Login
               </Link>
