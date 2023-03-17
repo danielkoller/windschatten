@@ -4,7 +4,7 @@ import { getValidSessionByToken } from '../../database/sessions';
 import Forum from './Forum';
 
 export const metadata = {
-  title: 'Forum by Windschatten',
+  title: 'Forum | Windschatten',
   description:
     'This is the forum page of Windschatten. Here you can interact with other users in your district. So you will never ride alone again!',
 };
