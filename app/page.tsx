@@ -46,8 +46,8 @@ export default function Home() {
             </div>
             <div className="px-4 md:px-0">
               <Image
-                src="/screenshot.png"
-                alt="Windschatten app screenshot"
+                src="/Cyclists.jpg"
+                alt="Cyclists in Vienna"
                 width={600}
                 height={600}
                 className="rounded-lg shadow-2xl"
