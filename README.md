@@ -19,6 +19,13 @@ Additionally, Windschatten fosters a sense of community by connecting users with
 - Figma (UI/UX planning)
 - DrawSQL (database schema planning)
 
+## Screenshots 
+
+<img width="1433" alt="Landing Page" src="https://user-images.githubusercontent.com/15102417/226737995-bfc97709-5a57-46c2-a3ec-4721a7264095.png">
+<img width="1434" alt="Map with Routing and Cost Calculation" src="https://user-images.githubusercontent.com/15102417/226738034-66205290-f77c-46b7-9940-48f363367baf.png">
+<img width="1440" alt="Chat functionality and possibility to see other riders" src="https://user-images.githubusercontent.com/15102417/226738108-f0340a22-266e-4d24-ae61-09d58d288112.png">
+
+
 
 ## Lessons Learned
 
