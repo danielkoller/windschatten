@@ -24,3 +24,17 @@ export function createSerializedRegisterSessionTokenCookie(token: string) {
     sameSite: 'lax',
   });
 }
+
+export function deleteSerializedRegisterSessionTokenCookie() {
+  // in the deployed version we want our cookie to be sent only under HTTPS
+  // in the development version we want out cookie to be sent under HTTP
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  return cookie.serialize('sessionToken', '', {
+    maxAge: 0,
+    httpOnly: true,
+    secure: isProduction,
+    path: '/',
+    sameSite: 'lax',
+  });
+}

@@ -61,10 +61,10 @@ export default async function ProfilePage({ params }: Props) {
       <h1 className=" text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-white text-center">
         {user.homeDistrict} - {user.workDistrict}
       </h1>
-      <div className="w-full">
+      <div id="map" className="w-full">
         <Map />
       </div>
-      <div className="w-full">
+      <div id="chat" className="w-full">
         <div className="flex flex-col md:flex-row items-start justify-center">
           <div className="w-full md:w-2/3 pr-0 md:pr-5">
             <div className="flex flex-col items-center justify-center">

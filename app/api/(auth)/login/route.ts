@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createSession } from '../../../../database/sessions';
 import { getUserByUsernameWithPasswordHash } from '../../../../database/users';
-import { createSerializedRegisterSessionTokenCookie } from '../../../../utils/cookies';
-import { createCsrfSecret } from '../../../../utils/csrf';
+import { createSerializedRegisterSessionTokenCookie } from '../../../../util/cookies';
+import { createCsrfSecret } from '../../../../util/csrf';
 
 const userSchema = z.object({
   username: z.string(),
