@@ -18,10 +18,10 @@ jobs:
           pg_isready
       - name: Create database user
         run: |
-          sudo -u postgres psql --command="CREATE USER next_js_example_winter_2023 PASSWORD 'next_js_example_winter_2023'" --command="\du"
+          sudo -u postgres psql --command="CREATE USER windschatten PASSWORD 'windschatten'" --command="\du"
       - name: Create database and allow user
         run: |
-          sudo -u postgres createdb --owner=next_js_example_winter_2023 next_js_example_winter_2023
+          sudo -u postgres createdb --owner=windschatten windschatten
       - uses: actions/checkout@v3
       # Use the official setup-node action (sets up Node.js):
       # https://github.com/actions/setup-node
