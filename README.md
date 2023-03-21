@@ -1,38 +1,119 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🚲 Windschatten
 
-## Getting Started
+Windschatten is a Next.js web application developed using TypeScript and React, created specifically for Vienna's biking community. The app focuses on assisting users in discovering the most efficient bike routes, helping them save money by comparing the cost of biking versus car usage. 
 
-First, run the development server:
+Additionally, Windschatten fosters a sense of community by connecting users with potential bike commute partners within their home and work districts, promoting a more enjoyable and sustainable commuting experience.
+
+
+## Tech Stack
+
+- Next.js (v13)
+- React
+- TypeScript
+- JavaScript
+- TailwindCSS/DaisyUI
+- PostgreSQL Database
+- Jest (testing)
+- Playwright (testing)
+- Postman (API testing & development)
+- Figma (UI/UX planning)
+- DrawSQL (database schema planning)
+
+
+## Lessons Learned
+
+Throughout the development of Windschatten, I have significantly improved my skills in Next.js (v13) and React, while also gaining valuable experience working with the Google Maps API. 
+
+This project marked my first venture into using Tailwind CSS and Daisy UI, both of which quickly became essential tools in my development toolkit, thanks to their ease of use and functionality. 
+
+Moreover, this project has reinforced the importance of thorough planning, as it has a substantial impact on the efficiency and overall success of the development process.
+
+
+## Features
+
+- Fast Bike Route Finder - Discover the most efficient bike routes in Vienna.
+- Cost Savings Calculator - Estimate the money saved by biking instead of using a car.
+- Bike Commute Partner Matching - Connect with 
+- Chat Functionality - Interact with fellow bike riders sharing the same route, fostering a sense of community and camaraderie.
+
+## Setup instructions
+
+1. Clone the project on your local machine (run each line individually):
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+git clone <url>
+cd <repo name>
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Connect to default database as admin:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- On Windows
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```bash
+psql -U postgres
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- On macOS
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+psql postgres
+```
 
-## Learn More
+- On Linux
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+sudo -u postgres psql
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Set up the database:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```bash
+CREATE DATABASE <database name>;
+CREATE USER <user name> WITH ENCRYPTED PASSWORD <user password>;
+GRANT ALL PRIVILEGES ON DATABASE <database name> TO <user name>;
+```
 
-## Deploy on Vercel
+4. After queries are successfully ran, quit `psql` and connect to the database
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+\q
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- On Windows & macOS
+
+```bash
+psql -U <user name> <database name>
+```
+
+- On Linux
+
+```bash
+sudo -u <user name> psql -U <user name> <database name>
+```
+
+5. In the repository's directory, run migrations using ley:
+
+```bash
+yarn migrate up
+```
+
+6. Create a .env file:
+
+- Open the project in your code editor
+- Copy the content of the .env.example file into the .env file
+- Replace xxxxxxxx with the access information
+- add .env file to .gitignore
+
+7. (Optional) Start deployment server:
+
+```bash
+yarn dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+## Acknowledgements
+
+The idea for Windschatten was born during the Coding Austria Hackathon, which happened in July 2022. The challenge was to develop a solution for a better mobility outside of cities. 
+
+Thanks to @gstrobl and @mt-sarah for this. 
