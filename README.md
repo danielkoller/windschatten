@@ -124,6 +124,19 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
+
+## Documentation
+
+The first version of Windschatten was a Click Dummy for the Coding Austria Hackathon, which can be found here -> [Windschatten Click Dummy](https://windschatten.vercel.app/). 
+
+While doing the UpLeveled-Bootcamp, I decided to do a fully working version. I first recreated the design in Figma with a user journey in the back of my head. 
+
+<img width="779" alt="Figma File" src="https://user-images.githubusercontent.com/15102417/226925784-e13b4752-76d2-43f5-8734-552b648922c1.png">
+
+I also used DrawSQL to create a database schema. 
+
+<img width="777" alt="DrawSQL File" src="https://user-images.githubusercontent.com/15102417/226926170-99d1b2f3-dd19-415e-a376-177e5f2eb25a.png">
+
 ## Acknowledgements
 
 The idea for Windschatten was born during the Coding Austria Hackathon, which happened in July 2022. The challenge was to develop a solution for a better mobility outside of cities. 
